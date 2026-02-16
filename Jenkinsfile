@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Pull Code') {
             steps {
-                git 'https://github.com/mStain/jenkins-demo'
+                git 'https://github.com/mStain/jenkins-demo.git'
             }
         }
         stage('Deploy to EC2') {
