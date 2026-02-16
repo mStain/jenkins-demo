@@ -1,13 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Install Nginx') {
+        stage('Pull Code') {
+            steps {
+                git 'https://github.com/mStain/jenkins-demo'
+            }
+        }
+        stage('Deploy to EC2') {
             steps {
                 sh '''
-                sudo apt update
-                sudo apt install nginx -y
-                sudo systemctl start nginx
-                sudo systemctl enable nginx
+                scp -i /var/jenkins_home/.ssh/id_rsa index.html ubuntu@3.72.41.92:/var/www/html/index.html
+                ssh -i /var/jenkins_home/.ssh/id_rsa ubuntu@3.72.41.92 "sudo systemctl restart nginx"
                 '''
             }
         }
